@@ -69,6 +69,42 @@ class Stack:
         else:
             raise TypeError("Index must be of type slice or int")
 
+    def __delitem__(self, key):
+        integer_type(key)
+        if key >= self.__count:
+            raise IndexError
+        temp = self.head
+        ind = 0
+        if key == 0:
+            if self.head is not None:
+                self.head = self.head.link
+            return
+        while temp is not None:
+            if ind + 1 == key:
+                if temp.link is not None:
+                    temp.link = temp.link.link
+                else:
+                    temp.link = None
+            temp = temp.link
+            ind += 1
+
+    def __setitem__(self, key, value):
+        integer_type(key)
+        if key >= self.__count:
+            raise IndexError
+        if key == 0:
+            self.head.data = value
+            return
+        temp = self.head
+        ind = 0
+        while temp is not None:
+            if ind == key:
+                temp.data = value
+                return
+            temp = temp.link
+            ind += 1
+
+
     def __reversed__(self):
         if self.head is None:
             return self
@@ -85,6 +121,7 @@ class Stack:
 
     def clear(self):
         self.head = None
+        self.__count = 0
 
     def push(self, elem):
         if type(elem) == StackElement:

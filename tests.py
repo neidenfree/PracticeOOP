@@ -21,6 +21,45 @@ class TestStack(unittest.TestCase):
         self.assertRaises(IndexError, lambda: self.s[20])
         self.assertEqual(2, self.s[0])
 
+    def test_delitem(self):
+        def fuck(ind):
+            def wrapper():
+                del self.s[ind]
+
+            return wrapper
+
+        # Return TypeError for not integer index
+        self.assertRaises(TypeError, fuck('asdasd'))
+        self.assertRaises(TypeError, fuck(12.4))
+        self.assertRaises(TypeError, fuck((2, )))
+
+        # Стандартные процедуры удаления
+        self.s.push_range(range(0, 10))
+        lst = list(reversed(range(0, 10)))
+        self.assertRaises(IndexError, fuck(200))
+        self.assertRaises(IndexError, fuck(10))
+        for ind in [0, 4, 2, 0]:
+            del self.s[ind]
+            del lst[ind]
+            self.assertEqual(lst, list(self.s))
+
+        # Удаление первого элемента из пустого стека
+        self.s.clear()
+        self.assertRaises(IndexError, fuck(0))
+
+        # Удаление последнего элемента из стека
+        self.s.push(1)
+        del self.s[0]
+        self.assertEqual([], list(self.s))
+
+    def test_sum(self):
+        ran = range(1, 10)
+        self.s.push_range(ran)
+        self.assertEqual(sum(ran), sum(self.s))
+
+    def test_set(self):
+        self.s.push_range(range(10))
+
     def tearDown(self) -> None:
         del self.s
 

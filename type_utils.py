@@ -1,5 +1,14 @@
 def type_strict(type_test):
     def value_wrapper(value):
+        if type(value) != type_test:
+            raise TypeError(f"{value} doesn't belong to type {type_test}")
+        return value
+
+    return value_wrapper
+
+
+def type_instance(type_test):
+    def value_wrapper(value):
         if not isinstance(value, type_test):
             raise TypeError(f"{value} doesn't belong to type {type_test}")
         return value
