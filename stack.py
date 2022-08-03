@@ -22,6 +22,7 @@ class StackElementDescriptor(GeneralDescriptor):
 
 
 class Stack:
+    """My own implementation of stack data structure"""
     head = StackElementDescriptor()
 
     def __init__(self, head: StackElement = None):

@@ -13,9 +13,13 @@ class TestStack(unittest.TestCase):
         for ran in ranges:
             self.s.clear()
             self.s.push_range(ran)
-            print(list(reversed(self.s)), list(ran))
-            reversed(self.s)
             self.assertListEqual(list(reversed(self.s)), list(ran))
+
+    def test_get(self):
+        self.s.push_range(range(0, 3))
+
+        self.assertRaises(IndexError, lambda: self.s[20])
+        self.assertEqual(2, self.s[0])
 
     def tearDown(self) -> None:
         del self.s
