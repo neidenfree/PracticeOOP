@@ -1,5 +1,5 @@
 import unittest
-from stack import Stack, Queue, Deque
+from linear_data_structures import Stack, Queue, Deque
 
 
 class TestStack(unittest.TestCase):
@@ -192,7 +192,7 @@ class TestDeque(unittest.TestCase):
         lst[4] = -200
         self.assertEqual(list(self.d), lst)
 
-        
+        self.d[2:4] = [1, 2]
 
     def tearDown(self) -> None:
         del self.d

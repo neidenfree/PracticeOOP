@@ -1,4 +1,4 @@
-from stack import Stack, StackElement
+from linear_data_structures import Stack, StackElement
 
 s = Stack()
 s.push((1, 2))

@@ -265,7 +265,11 @@ class Deque:
                     ind -= 1
 
     def __setitem__(self, key, value):
+        if type(key) is slice:
+            # TODO: Исправтиь!
+            raise NotImplementedError("Slice setter for deckis not implemented yet")
         integer_type(key)
+
         if key >= len(self) or key < 0:
             raise IndexError
         if key < len(self) // 2:
@@ -274,7 +278,7 @@ class Deque:
             while tail is not None:
                 if ind == key:
                     tail.data = value
-                    return tail.data
+                    return
                 else:
                     tail = tail.link_next
                     ind += 1
@@ -288,7 +292,6 @@ class Deque:
                 else:
                     head = head.link_prev
                     ind -= 1
-
 
     def create_first(self, value):
         if self.head is None:
