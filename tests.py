@@ -59,6 +59,10 @@ class TestStack(unittest.TestCase):
 
     def test_set(self):
         self.s.push_range(range(10))
+        self.s[1] = 100
+        lst = list((range(10)))
+        lst[-2] = 100
+        self.assertListEqual(list(reversed(self.s)), lst)
 
     def tearDown(self) -> None:
         del self.s

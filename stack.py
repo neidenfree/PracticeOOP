@@ -104,7 +104,6 @@ class Stack:
             temp = temp.link
             ind += 1
 
-
     def __reversed__(self):
         if self.head is None:
             return self
