@@ -171,7 +171,29 @@ class TestDeque(unittest.TestCase):
         self.assertRaises(IndexError, func(-1))
         for i in range(10):
             self.assertEqual(self.d[i], lst[i])
+
+        self.assertListEqual(self.d[0:5], lst[0:5])
+        self.assertListEqual(self.d[9:5:-1], lst[9:5:-1])
+        self.assertListEqual(self.d[::-1], lst[::-1])
+        self.assertListEqual(self.d[:2:2], lst[:2:2])
+
+    def test_setitem(self):
+        self.d.push_front_range(range(10))
+        lst = list(range(10))
+        self.d[0] = -200
+        lst[0] = -200
+        self.assertEqual(list(self.d), lst)
+
+        self.d[9] = -200
+        lst[9] = -200
+        self.assertEqual(list(self.d), lst)
+
+        self.d[4] = -200
+        lst[4] = -200
+        self.assertEqual(list(self.d), lst)
+
         
+
     def tearDown(self) -> None:
         del self.d
 

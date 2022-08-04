@@ -240,10 +240,11 @@ class Deque:
         # self.head, self.tail = self.tail, self.head
 
     def __getitem__(self, item):
+        if type(item) is slice:
+            return list(self)[item]
         integer_type(item)
         if item >= len(self) or item < 0:
             raise IndexError
-        # Если ключ
         if item < len(self) // 2:
             tail = self.tail
             ind = 0
@@ -262,6 +263,32 @@ class Deque:
                 else:
                     head = head.link_prev
                     ind -= 1
+
+    def __setitem__(self, key, value):
+        integer_type(key)
+        if key >= len(self) or key < 0:
+            raise IndexError
+        if key < len(self) // 2:
+            tail = self.tail
+            ind = 0
+            while tail is not None:
+                if ind == key:
+                    tail.data = value
+                    return tail.data
+                else:
+                    tail = tail.link_next
+                    ind += 1
+        else:
+            head = self.head
+            ind = len(self) - 1
+            while head is not None:
+                if ind == key:
+                    head.data = value
+                    return
+                else:
+                    head = head.link_prev
+                    ind -= 1
+
 
     def create_first(self, value):
         if self.head is None:
