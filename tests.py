@@ -1,5 +1,6 @@
 import unittest
 from linear_data_structures import Stack, Queue, Deque
+from trees import TreeElement, BinaryTree
 
 
 class TestStack(unittest.TestCase):
@@ -192,10 +193,45 @@ class TestDeque(unittest.TestCase):
         lst[4] = -200
         self.assertEqual(list(self.d), lst)
 
-        self.d[2:4] = [1, 2]
+        # self.d[2:4] = [1, 2]
 
     def tearDown(self) -> None:
         del self.d
+
+
+class TestTreeElement(unittest.TestCase):
+    def setUp(self) -> None:
+        pass
+
+    def test_types(self):
+        q = TreeElement(2, TreeElement(1), TreeElement(3))
+        self.assertEqual(q.data, 2)
+        self.assertEqual(q.left.data, 1)
+        self.assertEqual(q.right.data, 3)
+        self.assertEqual(q.right.right, None)
+
+
+class TestBinaryTree(unittest.TestCase):
+    def setUp(self) -> None:
+        el5 = TreeElement(5)
+        el6 = TreeElement(6)
+        el3 = TreeElement(3)
+        el2 = TreeElement(2, el5, el6)
+        el1 = TreeElement(1, el2, el3)
+        self.tree = BinaryTree(el1)
+
+    def test_traversals(self):
+        preorder_list = [1, 2, 5, 6, 3]
+        self.assertListEqual(preorder_list, self.tree.preorder_traversal())
+        inorder_list = [5, 2, 6, 1, 3]
+        self.assertListEqual(inorder_list, self.tree.inorder_traversal())
+        postorder_list = [5, 6, 2, 3, 1]
+        self.assertListEqual(postorder_list, self.tree.postorder_traversal())
+
+    def test_search(self):
+        self.assertEqual(self.tree.search(2).data, 2)
+        self.assertEqual(self.tree.search(500), None)
+        self.assertEqual(self.tree.search(1).data, 1)
 
 
 if __name__ == "__main__":
