@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Iterable
 
 from type_utils import GeneralDescriptor
 
@@ -18,6 +18,9 @@ class TreeElement:
             self.right = right
         else:
             raise TypeError
+
+    def __str__(self):
+        return str(self.data)
 
 
 class TreeElementDescriptor(GeneralDescriptor):
@@ -91,5 +94,73 @@ class BinaryTree:
         helper(r)
 
         return res
+
+
+class BinarySearchTree(BinaryTree):
+    def search(self, elem) -> Optional[TreeElement]:
+        r = self.root
+        res = None
+
+        def helper(root: TreeElement):
+            nonlocal res
+            if root is None:
+                return
+            if root.data == elem:
+                res = root
+                return
+            elif root.data < elem:
+                helper(root.left)
+            else:
+                helper(root.right)
+
+        helper(r)
+        return res
+
+    def add(self, elem):
+        if self.root is None:
+            self.root = TreeElement(elem)
+            return
+
+        r = self.root
+
+        def helper(root):
+            nonlocal r
+
+            if root is None:
+                root = TreeElement(elem)
+
+            if elem < root.data:
+                if root.left is None:
+                    root.left = TreeElement(elem)
+                    return
+                else:
+                    helper(root.left)
+            elif elem > root.data:
+                if root.right is None:
+                    root.right = TreeElement(elem)
+                else:
+                    helper(root.right)
+            else:
+                return
+
+        helper(r)
+
+    def add_range(self, collection: Iterable):
+        if not isinstance(collection, Iterable):
+            raise TypeError(f"{collection} is not iterable")
+        for el in collection:
+            self.add(el)
+
+    def print_tree(self):
+        r = self.root
+
+        def helper(root, spaces):
+            if root is None:
+                return
+            helper(root.right, spaces + 5)
+            print(" " * spaces, root.data)
+            helper(root.left, spaces + 5)
+
+        helper(r, 5)
 
 

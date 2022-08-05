@@ -1,6 +1,6 @@
 import unittest
 from linear_data_structures import Stack, Queue, Deque
-from trees import TreeElement, BinaryTree
+from trees import TreeElement, BinaryTree, BinarySearchTree
 
 
 class TestStack(unittest.TestCase):
@@ -221,6 +221,7 @@ class TestBinaryTree(unittest.TestCase):
         self.tree = BinaryTree(el1)
 
     def test_traversals(self):
+        print('test')
         preorder_list = [1, 2, 5, 6, 3]
         self.assertListEqual(preorder_list, self.tree.preorder_traversal())
         inorder_list = [5, 2, 6, 1, 3]
@@ -232,6 +233,22 @@ class TestBinaryTree(unittest.TestCase):
         self.assertEqual(self.tree.search(2).data, 2)
         self.assertEqual(self.tree.search(500), None)
         self.assertEqual(self.tree.search(1).data, 1)
+
+
+class TestBinarySearchTree(unittest.TestCase):
+    def setUp(self) -> None:
+        self.bst = BinarySearchTree()
+        self.bst.add_range([5, 1, 8, 6, 10, -2])
+
+    def test_print_tree(self):
+        self.bst.add(4)
+        self.bst.print_tree()
+
+    def test_add(self):
+        self.bst.add(10)
+        self.bst.add(11)
+        self.bst.add(-20)
+        self.bst.add(22)
 
 
 if __name__ == "__main__":
